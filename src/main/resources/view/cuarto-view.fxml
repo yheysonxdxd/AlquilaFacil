@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.CustomTextField?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.alquilafacil.controller.YCCuartoController"
+      styleClass="pagina">
+
+    <fx:define>
+        <ToggleGroup fx:id="ycGrupoVista"/>
+        <ToggleGroup fx:id="ycGrupoEstado"/>
+
+        <VBox fx:id="ycPanelFormulario" styleClass="drawer"
+              prefWidth="460.0" maxWidth="460.0" maxHeight="Infinity">
+            <HBox styleClass="drawer-header">
+                <StackPane styleClass="drawer-icono"><FontIcon iconLiteral="fth-key"/></StackPane>
+                <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                    <Label fx:id="ycLblTituloFormulario" text="Nuevo cuarto" styleClass="drawer-titulo"/>
+                    <Label fx:id="ycLblSubtituloFormulario" text="Completa los datos del cuarto"
+                           styleClass="drawer-subtitulo"/>
+                </VBox>
+                <Button onAction="#ycOnCerrarFormulario" styleClass="flat,button-circle">
+                    <graphic><FontIcon iconLiteral="fth-x"/></graphic>
+                </Button>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" styleClass="drawer-scroll" VBox.vgrow="ALWAYS">
+                <VBox styleClass="drawer-body">
+                    <Label text="FOTO DEL CUARTO" styleClass="seccion-form"/>
+
+                    <StackPane fx:id="ycPreviewFoto" styleClass="foto-preview"/>
+                    <HBox spacing="10.0">
+                        <Button text="Elegir foto" onAction="#ycOnElegirFoto" styleClass="button-outlined">
+                            <graphic><FontIcon iconLiteral="fth-upload"/></graphic>
+                        </Button>
+                        <Button fx:id="ycBtnQuitarFoto" text="Quitar foto" onAction="#ycOnQuitarFoto"
+                                styleClass="flat,danger">
+                            <graphic><FontIcon iconLiteral="fth-trash-2"/></graphic>
+                        </Button>
+                    </HBox>
+                    <Label text="JPG o PNG. Se guarda una copia en la carpeta del programa."
+                           styleClass="campo-ayuda" wrapText="true"/>
+
+                    <Label text="MAS FOTOS (GALERIA)" styleClass="seccion-form"/>
+                    <FlowPane fx:id="ycPanelGaleria" hgap="8.0" vgap="8.0"/>
+                    <Label text="Hasta 8 fotos extra: baño, cocina, vista. Se ven en la ficha del cuarto."
+                           styleClass="campo-ayuda" wrapText="true"/>
+
+                    <Label text="DATOS DEL CUARTO" styleClass="seccion-form"/>
+
+                    <HBox spacing="14.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Numero o nombre *" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtNumero" promptText="Ej. Cuarto 101">
+                                <left><FontIcon iconLiteral="fth-hash"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" prefWidth="90.0">
+                            <Label text="Piso" styleClass="campo-label"/>
+                            <TextField fx:id="ycTxtPiso" promptText="Ej. 1"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" prefWidth="110.0">
+                            <Label text="Personas" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtCapacidad" promptText="Ej. 2">
+                                <left><FontIcon iconLiteral="fth-users"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox styleClass="campo">
+                        <Label text="Descripcion" styleClass="campo-label"/>
+                        <TextArea fx:id="ycTxtDescripcion" prefRowCount="3" wrapText="true"
+                                  promptText="Ej. Cuarto iluminado, con ventana grande y piso de madera."/>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                    </VBox>
+
+                    <Label text="QUE INCLUYE" styleClass="seccion-form"/>
+                    <FlowPane fx:id="ycPanelComodidades" hgap="8.0" vgap="8.0"/>
+
+                    <Label text="COBRO" styleClass="seccion-form"/>
+
+                    <VBox styleClass="campo">
+                        <Label fx:id="ycLblPrecio" text="Precio mensual (S/) *" styleClass="campo-label"/>
+                        <CustomTextField fx:id="ycTxtPrecio" promptText="Ej. 350.00">
+                            <left><FontIcon iconLiteral="fth-dollar-sign"/></left>
+                        </CustomTextField>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                        <Label fx:id="ycLblAyudaPrecio" text="La luz y el agua se registran aparte, cada mes."
+                               styleClass="campo-ayuda" wrapText="true"/>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+
+            <HBox styleClass="drawer-footer">
+                <Button text="Cancelar" onAction="#ycOnCerrarFormulario" styleClass="button-outlined"/>
+                <Button text="Guardar" onAction="#ycOnGuardar" styleClass="accent" defaultButton="true">
+                    <graphic><FontIcon iconLiteral="fth-check"/></graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </fx:define>
+
+    <StackPane fx:id="ycHero" styleClass="cuartos-hero" minHeight="200.0" prefHeight="200.0" maxHeight="200.0">
+        <Region fx:id="ycHeroFondo" styleClass="hero-fondo"/>
+        <Region styleClass="hero-velo"/>
+        <HBox styleClass="hero-contenido">
+            <VBox spacing="6.0" HBox.hgrow="ALWAYS" alignment="BOTTOM_LEFT">
+                <Label text="ALQUILER MENSUAL" styleClass="hero-kicker"/>
+                <Label text="Cuartos" styleClass="hero-titulo"/>
+                <Label fx:id="ycLblResumen" text="Cuartos y departamentos para inquilinos fijos" styleClass="hero-subtitulo"/>
+                <HBox spacing="10.0" styleClass="hero-stats">
+                    <Label fx:id="ycLblHeroDisponibles" text="0 disponibles" styleClass="hero-stat">
+                        <graphic><FontIcon iconLiteral="fth-check-circle"/></graphic>
+                    </Label>
+                    <Label fx:id="ycLblHeroOcupacion" text="0% ocupado" styleClass="hero-stat">
+                        <graphic><FontIcon iconLiteral="fth-pie-chart"/></graphic>
+                    </Label>
+                    <Label fx:id="ycLblHeroDesde" text="Desde S/ 0" styleClass="hero-stat">
+                        <graphic><FontIcon iconLiteral="fth-tag"/></graphic>
+                    </Label>
+                </HBox>
+            </VBox>
+            <VBox alignment="BOTTOM_RIGHT">
+                <Button fx:id="ycBtnNuevo" text="Nuevo cuarto" onAction="#ycOnNuevo" styleClass="accent,boton-principal,hero-boton">
+                    <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+                </Button>
+            </VBox>
+        </HBox>
+    </StackPane>
+
+    <HBox styleClass="barra-herramientas,barra-cuartos">
+        <CustomTextField fx:id="ycTxtBuscar" promptText="Buscar por nombre, descripcion o comodidad"
+                         styleClass="buscador" prefWidth="250.0">
+            <left><FontIcon iconLiteral="fth-search"/></left>
+        </CustomTextField>
+        <HBox styleClass="segmentado">
+            <ToggleButton fx:id="ycFiltroTodos" text="Todos" toggleGroup="$ycGrupoEstado" selected="true"
+                          styleClass="left-pill"/>
+            <ToggleButton fx:id="ycFiltroLibres" text="Disponibles" toggleGroup="$ycGrupoEstado"
+                          styleClass="center-pill"/>
+            <ToggleButton fx:id="ycFiltroOcupados" text="Ocupados" toggleGroup="$ycGrupoEstado"
+                          styleClass="right-pill"/>
+        </HBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="ycBtnEditar" text="Editar" onAction="#ycOnEditar" styleClass="button-outlined">
+            <graphic><FontIcon iconLiteral="fth-edit-2"/></graphic>
+        </Button>
+        <Button fx:id="ycBtnEliminar" text="Eliminar" onAction="#ycOnEliminar"
+                styleClass="button-outlined,danger">
+            <graphic><FontIcon iconLiteral="fth-trash-2"/></graphic>
+        </Button>
+        <HBox styleClass="segmentado">
+            <ToggleButton fx:id="ycVistaGaleria" toggleGroup="$ycGrupoVista" selected="true"
+                          styleClass="left-pill,button-icon">
+                <graphic><FontIcon iconLiteral="fth-grid"/></graphic>
+                <tooltip><Tooltip text="Ver como galeria"/></tooltip>
+            </ToggleButton>
+            <ToggleButton fx:id="ycVistaLista" toggleGroup="$ycGrupoVista"
+                          styleClass="right-pill,button-icon">
+                <graphic><FontIcon iconLiteral="fth-list"/></graphic>
+                <tooltip><Tooltip text="Ver como lista"/></tooltip>
+            </ToggleButton>
+        </HBox>
+    </HBox>
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <ScrollPane fx:id="ycScrollGaleria" fitToWidth="true" styleClass="galeria-scroll">
+            <FlowPane fx:id="ycGaleria" styleClass="galeria" hgap="20.0" vgap="20.0"/>
+        </ScrollPane>
+
+        <VBox fx:id="ycPanelLista" styleClass="tarjeta" visible="false" managed="false">
+            <TableView fx:id="ycTabla" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="ycColNumero"      text="CUARTO"      prefWidth="150.0"/>
+                    <TableColumn fx:id="ycColPiso"        text="PISO"        prefWidth="70.0" maxWidth="90.0"/>
+                    <TableColumn fx:id="ycColDescripcion" text="DESCRIPCION" prefWidth="240.0"/>
+                    <TableColumn fx:id="ycColPrecio"      text="PRECIO"      prefWidth="110.0"/>
+                    <TableColumn fx:id="ycColEstado"      text="ESTADO"      prefWidth="100.0"/>
+                    <TableColumn fx:id="ycColInquilino"   text="INQUILINO"   prefWidth="220.0"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </StackPane>
+</VBox>

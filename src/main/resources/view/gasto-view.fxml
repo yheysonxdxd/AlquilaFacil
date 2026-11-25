@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.CustomTextField?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.alquilafacil.controller.YCGastoController"
+            fitToWidth="true" styleClass="pagina-scroll">
+
+    <fx:define>
+        <ToggleGroup fx:id="ycGrupoNegocio"/>
+
+        <VBox fx:id="ycPanelFormulario" styleClass="drawer" prefWidth="440.0" maxWidth="440.0" maxHeight="Infinity">
+            <HBox styleClass="drawer-header">
+                <StackPane styleClass="drawer-icono"><FontIcon iconLiteral="fth-trending-down"/></StackPane>
+                <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                    <Label fx:id="ycLblTituloFormulario" text="Nuevo gasto" styleClass="drawer-titulo"/>
+                    <Label text="Dinero que sale del negocio" styleClass="drawer-subtitulo"/>
+                </VBox>
+                <Button onAction="#ycOnCerrarFormulario" styleClass="flat,button-circle">
+                    <graphic><FontIcon iconLiteral="fth-x"/></graphic>
+                </Button>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" styleClass="drawer-scroll" VBox.vgrow="ALWAYS">
+                <VBox styleClass="drawer-body">
+                    <Label text="EL GASTO" styleClass="seccion-form"/>
+                    <HBox spacing="12.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Monto (S/) *" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtMonto" promptText="Ej. 120.00">
+                                <left><FontIcon iconLiteral="fth-dollar-sign"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Fecha *" styleClass="campo-label"/>
+                            <DatePicker fx:id="ycDpFecha" maxWidth="Infinity"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+                    <VBox styleClass="campo">
+                        <Label text="Categoria *" styleClass="campo-label"/>
+                        <ComboBox fx:id="ycCmbCategoria" promptText="En que se gasto" maxWidth="Infinity"/>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                    </VBox>
+                    <VBox styleClass="campo">
+                        <Label text="Descripcion" styleClass="campo-label"/>
+                        <TextField fx:id="ycTxtDescripcion" promptText="Ej. Cambio de chapa del cuarto 204"/>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                    </VBox>
+
+                    <Label text="A QUE NEGOCIO CORRESPONDE" styleClass="seccion-form"/>
+                    <HBox styleClass="segmentado,selector-modalidad">
+                        <ToggleButton fx:id="ycNegMensual" text="Alquiler mensual" toggleGroup="$ycGrupoNegocio"
+                                      styleClass="left-pill" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                        <ToggleButton fx:id="ycNegHospedaje" text="Hospedaje" toggleGroup="$ycGrupoNegocio"
+                                      styleClass="center-pill" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                        <ToggleButton fx:id="ycNegGeneral" text="Los dos" toggleGroup="$ycGrupoNegocio" selected="true"
+                                      styleClass="right-pill" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                    <Label text="Elige &quot;Los dos&quot; para gastos del edificio que no son de un negocio en especial (ej. impuestos)."
+                           styleClass="campo-ayuda" wrapText="true"/>
+
+                    <VBox styleClass="campo">
+                        <Label text="Pagado con" styleClass="campo-label"/>
+                        <ComboBox fx:id="ycCmbMetodo" maxWidth="Infinity"/>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+
+            <HBox styleClass="drawer-footer">
+                <Button text="Cancelar" onAction="#ycOnCerrarFormulario" styleClass="button-outlined"/>
+                <Button text="Guardar gasto" onAction="#ycOnGuardar" styleClass="accent" defaultButton="true">
+                    <graphic><FontIcon iconLiteral="fth-check"/></graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </fx:define>
+
+    <VBox styleClass="pagina">
+        <HBox styleClass="pagina-cabecera">
+            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                <Label text="Gastos y ganancia" styleClass="pagina-titulo"/>
+                <Label fx:id="ycLblSubtitulo" text="Lo que entra, lo que sale y lo que te queda" styleClass="pagina-subtitulo"/>
+            </VBox>
+            <ComboBox fx:id="ycCmbMes" prefWidth="190.0" styleClass="filtro-combo"/>
+            <Button text="Nuevo gasto" onAction="#ycOnNuevo" styleClass="accent,boton-principal">
+                <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+            </Button>
+        </HBox>
+
+        <GridPane hgap="16.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+            </columnConstraints>
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="0">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Ingresos" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono,verde"><FontIcon iconLiteral="fth-trending-up"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiIngresos" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiIngresosDetalle" text=" " styleClass="kpi-detalle"/>
+            </VBox>
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="1">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Gastos" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono,ambar"><FontIcon iconLiteral="fth-trending-down"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiGastos" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiGastosDetalle" text=" " styleClass="kpi-detalle"/>
+            </VBox>
+            <VBox styleClass="tarjeta,kpi,kpi-destacado" GridPane.columnIndex="2">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Ganancia del mes" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono"><FontIcon iconLiteral="fth-award"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiGanancia" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiGananciaDetalle" text=" " styleClass="kpi-detalle"/>
+            </VBox>
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="3">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Margen" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono"><FontIcon iconLiteral="fth-percent"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiMargen" text="0 %" styleClass="kpi-valor"/>
+                <Label text="De cada S/ 100 que entran, esto te queda" styleClass="kpi-detalle" wrapText="true"/>
+            </VBox>
+        </GridPane>
+
+        <GridPane hgap="16.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="55.0"/>
+                <ColumnConstraints percentWidth="45.0"/>
+            </columnConstraints>
+            <VBox styleClass="tarjeta" GridPane.columnIndex="0">
+                <Label text="Ganancia por negocio" styleClass="grafico-titulo"/>
+                <VBox fx:id="ycPanelNegocios" spacing="12.0"/>
+            </VBox>
+            <VBox styleClass="tarjeta" GridPane.columnIndex="1">
+                <Label text="En que se fue el dinero" styleClass="grafico-titulo"/>
+                <VBox fx:id="ycPanelCategorias" spacing="10.0"/>
+            </VBox>
+        </GridPane>
+
+        <VBox styleClass="tarjeta" minHeight="360.0" prefHeight="420.0">
+            <HBox styleClass="barra-herramientas">
+                <Label fx:id="ycLblLista" text="Gastos del mes" styleClass="grafico-titulo"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Excel" onAction="#ycOnExcel" styleClass="button-outlined">
+                    <graphic><FontIcon iconLiteral="fth-download"/></graphic>
+                    <tooltip><Tooltip text="Descargar esta lista en Excel"/></tooltip>
+                </Button>
+                <Button fx:id="ycBtnEditar" text="Editar" onAction="#ycOnEditar" styleClass="button-outlined">
+                    <graphic><FontIcon iconLiteral="fth-edit-2"/></graphic>
+                </Button>
+                <Button fx:id="ycBtnEliminar" text="Eliminar" onAction="#ycOnEliminar" styleClass="button-outlined,danger">
+                    <graphic><FontIcon iconLiteral="fth-trash-2"/></graphic>
+                </Button>
+            </HBox>
+            <TableView fx:id="ycTabla" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="ycColFecha"       text="FECHA"       prefWidth="100.0"/>
+                    <TableColumn fx:id="ycColCategoria"   text="CATEGORIA"   prefWidth="190.0"/>
+                    <TableColumn fx:id="ycColNegocio"     text="NEGOCIO"     prefWidth="140.0"/>
+                    <TableColumn fx:id="ycColDescripcion" text="DESCRIPCION" prefWidth="260.0"/>
+                    <TableColumn fx:id="ycColMetodo"      text="PAGO"        prefWidth="110.0"/>
+                    <TableColumn fx:id="ycColMonto"       text="MONTO"       prefWidth="110.0"/>
+                    <TableColumn fx:id="ycColUsuario"     text="REGISTRO"    prefWidth="100.0"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </VBox>
+</ScrollPane>

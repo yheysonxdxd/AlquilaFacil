@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.CustomTextField?>
+<?import com.alquilafacil.ui.YCPaginador?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.alquilafacil.controller.YCPagoController"
+      styleClass="pagina">
+
+    <fx:define>
+        <VBox fx:id="ycPanelFormulario" styleClass="drawer"
+              prefWidth="460.0" maxWidth="460.0" maxHeight="Infinity">
+            <HBox styleClass="drawer-header">
+                <StackPane styleClass="drawer-icono"><FontIcon iconLiteral="fth-dollar-sign"/></StackPane>
+                <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                    <Label text="Registrar pago" styleClass="drawer-titulo"/>
+                    <Label text="Se genera un recibo numerado en PDF" styleClass="drawer-subtitulo"/>
+                </VBox>
+                <Button onAction="#ycOnCerrarFormulario" styleClass="flat,button-circle">
+                    <graphic><FontIcon iconLiteral="fth-x"/></graphic>
+                </Button>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" styleClass="drawer-scroll" VBox.vgrow="ALWAYS">
+                <VBox styleClass="drawer-body">
+                    <Label text="QUIEN PAGA" styleClass="seccion-form"/>
+
+                    <VBox styleClass="campo">
+                        <Label text="Inquilino *" styleClass="campo-label"/>
+                        <ComboBox fx:id="ycCmbInquilino" promptText="Selecciona el inquilino" maxWidth="Infinity"/>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                    </VBox>
+
+                    <VBox styleClass="campo">
+                        <Label text="Mes que paga *" styleClass="campo-label"/>
+                        <ComboBox fx:id="ycCmbPeriodo" promptText="Selecciona el mes" maxWidth="Infinity"/>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                        <Label fx:id="ycLblAyudaPeriodo" text=" " styleClass="campo-ayuda" wrapText="true"/>
+                    </VBox>
+
+                    <Label text="DETALLE" styleClass="seccion-form"/>
+
+                    <VBox styleClass="campo">
+                        <Label text="Alquiler (S/)" styleClass="campo-label"/>
+                        <CustomTextField fx:id="ycTxtAlquiler" promptText="0.00">
+                            <left><FontIcon iconLiteral="fth-home"/></left>
+                        </CustomTextField>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                    </VBox>
+                    <HBox spacing="14.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Luz (S/)" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtLuz" promptText="0.00">
+                                <left><FontIcon iconLiteral="fth-zap"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Agua (S/)" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtAgua" promptText="0.00">
+                                <left><FontIcon iconLiteral="fth-droplet"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox spacing="14.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Forma de pago" styleClass="campo-label"/>
+                            <ComboBox fx:id="ycCmbMetodo" maxWidth="Infinity"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox styleClass="campo">
+                        <Label text="Nota (opcional)" styleClass="campo-label"/>
+                        <TextField fx:id="ycTxtNota" promptText="Ej. Pago con descuento por arreglo de la ducha"/>
+                    </VBox>
+
+                    <VBox styleClass="tarjeta,kpi,kpi-destacado">
+                        <Label text="Total a cobrar" styleClass="kpi-titulo"/>
+                        <Label fx:id="ycLblTotal" text="S/ 0.00" styleClass="kpi-valor"/>
+                        <Label fx:id="ycLblTotalLetras" text=" " styleClass="kpi-detalle" wrapText="true"/>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+
+            <HBox styleClass="drawer-footer">
+                <Button text="Cancelar" onAction="#ycOnCerrarFormulario" styleClass="button-outlined"/>
+                <Button fx:id="ycBtnRegistrar" text="Registrar pago" onAction="#ycOnRegistrar"
+                        styleClass="accent" defaultButton="true">
+                    <graphic><FontIcon iconLiteral="fth-check"/></graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </fx:define>
+
+    <HBox styleClass="pagina-cabecera">
+        <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+            <Label text="Pagos y recibos" styleClass="pagina-titulo"/>
+            <Label text="Historial de cobros; cada pago genera su recibo en PDF" styleClass="pagina-subtitulo"/>
+        </VBox>
+        <Button text="Registrar pago" onAction="#ycOnNuevo" styleClass="accent,boton-principal">
+            <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+        </Button>
+    </HBox>
+
+    <VBox fx:id="ycPanelDeudas" styleClass="tarjeta,deudas">
+        <HBox alignment="CENTER_LEFT" spacing="12.0">
+            <StackPane fx:id="ycIconoDeudas" styleClass="kpi-icono,rojo"><FontIcon iconLiteral="fth-alert-circle"/></StackPane>
+            <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                <Label fx:id="ycLblDeudas" text="Estan debiendo" styleClass="grafico-titulo"/>
+                <Label fx:id="ycLblDeudasAyuda" styleClass="grafico-subtitulo" wrapText="true"/>
+            </VBox>
+        </HBox>
+        <ScrollPane fx:id="ycScrollDeudas" fitToWidth="true" maxHeight="250.0" styleClass="deudas-scroll">
+            <VBox fx:id="ycListaDeudas" spacing="8.0"/>
+        </ScrollPane>
+    </VBox>
+
+    <VBox styleClass="tarjeta" VBox.vgrow="ALWAYS">
+        <HBox styleClass="barra-herramientas">
+            <CustomTextField fx:id="ycTxtBuscar" promptText="Buscar por inquilino o cuarto"
+                             styleClass="buscador" prefWidth="320.0">
+                <left><FontIcon iconLiteral="fth-search"/></left>
+            </CustomTextField>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Excel" onAction="#ycOnExcel" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-download"/></graphic>
+                <tooltip><Tooltip text="Descargar esta lista en Excel"/></tooltip>
+            </Button>
+            <Button fx:id="ycBtnVer" text="Ver recibo" onAction="#ycOnVerRecibo" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-printer"/></graphic>
+            </Button>
+            <Button fx:id="ycBtnGuardarPdf" text="Guardar PDF" onAction="#ycOnGuardarPdf" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-download"/></graphic>
+            </Button>
+            <Button fx:id="ycBtnAnular" text="Anular" onAction="#ycOnAnular" styleClass="button-outlined,danger">
+                <graphic><FontIcon iconLiteral="fth-slash"/></graphic>
+            </Button>
+        </HBox>
+
+        <TableView fx:id="ycTabla" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="ycColRecibo"    text="RECIBO"     prefWidth="100.0"/>
+                <TableColumn fx:id="ycColFecha"     text="FECHA"      prefWidth="100.0"/>
+                <TableColumn fx:id="ycColInquilino" text="INQUILINO"  prefWidth="220.0"/>
+                <TableColumn fx:id="ycColCuarto"    text="CUARTO"     prefWidth="110.0"/>
+                <TableColumn fx:id="ycColMes"       text="MES PAGADO" prefWidth="140.0"/>
+                <TableColumn fx:id="ycColTotal"     text="TOTAL"      prefWidth="100.0"/>
+                <TableColumn fx:id="ycColMetodo"    text="FORMA"      prefWidth="110.0"/>
+                <TableColumn fx:id="ycColUsuario"   text="COBRO"      prefWidth="90.0"/>
+                <TableColumn fx:id="ycColEstado"    text="ESTADO"     prefWidth="100.0"/>
+            </columns>
+        </TableView>
+
+        <YCPaginador fx:id="ycPaginador"/>
+    </VBox>
+</VBox>

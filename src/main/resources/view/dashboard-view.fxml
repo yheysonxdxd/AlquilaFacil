@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.alquilafacil.controller.YCDashboardController"
+            fitToWidth="true" styleClass="pagina-scroll">
+
+    <VBox styleClass="pagina">
+
+        <HBox styleClass="pagina-cabecera">
+            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                <Label text="Inicio" styleClass="pagina-titulo"/>
+                <Label fx:id="ycLblFecha" text="Resumen general" styleClass="pagina-subtitulo"/>
+            </VBox>
+            <Button fx:id="ycBtnReporte" text="Reporte del mes" onAction="#ycOnReporte" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-file-text"/></graphic>
+            </Button>
+            <Button fx:id="ycBtnReporteAnual" text="Reporte anual" onAction="#ycOnReporteAnual" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-calendar"/></graphic>
+            </Button>
+            <Button text="Actualizar" onAction="#ycOnActualizar" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-refresh-cw"/></graphic>
+            </Button>
+            <Button text="Registrar pago" onAction="#ycOnRegistrarPago" styleClass="accent,boton-principal">
+                <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+            </Button>
+        </HBox>
+
+        <GridPane hgap="16.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+            </columnConstraints>
+
+            <VBox styleClass="tarjeta,kpi,kpi-destacado" GridPane.columnIndex="0">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Cobrado este mes" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono"><FontIcon iconLiteral="fth-trending-up"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiCobrado" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiCobradoDetalle" text=" " styleClass="kpi-detalle"/>
+            </VBox>
+
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="1">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Deuda vencida" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono"><FontIcon iconLiteral="fth-alert-circle"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiDeuda" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiDeudaDetalle" text=" " styleClass="kpi-detalle"/>
+            </VBox>
+
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="2">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Inquilinos atrasados" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono"><FontIcon iconLiteral="fth-user-x"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiAtrasados" text="0" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiAtrasadosDetalle" text=" " styleClass="kpi-detalle"/>
+            </VBox>
+
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="3">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Ocupacion" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono"><FontIcon iconLiteral="fth-key"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiOcupacion" text="0 %" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiOcupacionDetalle" text=" " styleClass="kpi-detalle"/>
+            </VBox>
+        </GridPane>
+
+        <VBox fx:id="ycPanelContratos" styleClass="tarjeta" spacing="8.0" visible="false" managed="false">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <StackPane styleClass="kpi-icono,ambar"><FontIcon iconLiteral="fth-file-text"/></StackPane>
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label fx:id="ycLblContratos" text="Contratos por vencer" styleClass="grafico-titulo"/>
+                    <Label text="Renuevalos o conversa con el inquilino antes de la fecha de fin."
+                           styleClass="grafico-subtitulo"/>
+                </VBox>
+            </HBox>
+            <VBox fx:id="ycListaContratos" spacing="6.0"/>
+        </VBox>
+
+        <GridPane hgap="16.0" vgap="16.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="64.0"/>
+                <ColumnConstraints percentWidth="36.0"/>
+            </columnConstraints>
+
+            <VBox styleClass="tarjeta,grafico" GridPane.columnIndex="0" spacing="8.0">
+                <HBox alignment="CENTER_LEFT" spacing="8.0">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Pagos pendientes" styleClass="grafico-titulo"/>
+                        <Label text="Doble clic para cobrar · los mas atrasados primero" styleClass="grafico-subtitulo"/>
+                    </VBox>
+                    <Button fx:id="ycBtnCopiar" text="Copiar mensaje" onAction="#ycOnCopiarRecordatorio"
+                            styleClass="button-outlined">
+                        <graphic><FontIcon iconLiteral="fth-copy"/></graphic>
+                    </Button>
+                    <Button fx:id="ycBtnWhatsapp" text="WhatsApp" onAction="#ycOnWhatsapp" styleClass="button-outlined,success">
+                        <graphic><FontIcon iconLiteral="fth-message-circle"/></graphic>
+                    </Button>
+                    <Button fx:id="ycBtnCobrar" text="Cobrar" onAction="#ycOnCobrar" styleClass="accent">
+                        <graphic><FontIcon iconLiteral="fth-dollar-sign"/></graphic>
+                    </Button>
+                </HBox>
+                <TableView fx:id="ycTablaPendientes" prefHeight="380.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="ycColInquilino" text="INQUILINO" prefWidth="200.0"/>
+                        <TableColumn fx:id="ycColCuarto"    text="CUARTO"    prefWidth="100.0"/>
+                        <TableColumn fx:id="ycColMes"       text="MES"       prefWidth="120.0"/>
+                        <TableColumn fx:id="ycColVence"     text="VENCE"     prefWidth="95.0"/>
+                        <TableColumn fx:id="ycColEstado"    text="ESTADO"    prefWidth="140.0"/>
+                        <TableColumn fx:id="ycColMonto"     text="MONTO"     prefWidth="100.0"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <VBox styleClass="tarjeta,grafico" GridPane.columnIndex="1">
+                <Label text="Ingresos por mes" styleClass="grafico-titulo"/>
+                <Label text="Total cobrado en los ultimos 6 meses (S/)" styleClass="grafico-subtitulo"/>
+                <BarChart fx:id="ycGraficoIngresos" legendVisible="false" animated="false"
+                          prefHeight="380.0" VBox.vgrow="ALWAYS" barGap="2.0" categoryGap="14.0">
+                    <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
+                    <yAxis><NumberAxis side="LEFT" minorTickVisible="false"/></yAxis>
+                </BarChart>
+            </VBox>
+        </GridPane>
+    </VBox>
+</ScrollPane>

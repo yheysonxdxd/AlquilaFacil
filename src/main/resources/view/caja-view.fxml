@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.CustomTextField?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.alquilafacil.controller.YCCajaController"
+            fitToWidth="true" styleClass="pagina-scroll">
+
+    <VBox styleClass="pagina">
+        <HBox styleClass="pagina-cabecera">
+            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                <Label text="Caja del día" styleClass="pagina-titulo"/>
+                <Label fx:id="ycLblSubtitulo" text="Cuanto entro y salio, con que se pago y quien lo cobro" styleClass="pagina-subtitulo"/>
+            </VBox>
+            <ComboBox fx:id="ycCmbUsuario" prefWidth="170.0" styleClass="filtro-combo"/>
+            <DatePicker fx:id="ycDpDia" prefWidth="150.0"/>
+            <Button text="Imprimir cierre" onAction="#ycOnImprimir" styleClass="accent,boton-principal">
+                <graphic><FontIcon iconLiteral="fth-printer"/></graphic>
+            </Button>
+        </HBox>
+
+        <GridPane hgap="16.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+                <ColumnConstraints percentWidth="25.0"/>
+            </columnConstraints>
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="0">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Entró" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono,verde"><FontIcon iconLiteral="fth-arrow-down-circle"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiEntro" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiEntroDetalle" text=" " styleClass="kpi-detalle"/>
+            </VBox>
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="1">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Salió" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono,ambar"><FontIcon iconLiteral="fth-arrow-up-circle"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiSalio" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label fx:id="ycKpiSalioDetalle" text=" " styleClass="kpi-detalle" wrapText="true"/>
+            </VBox>
+            <VBox styleClass="tarjeta,kpi" GridPane.columnIndex="2">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Neto del día" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono"><FontIcon iconLiteral="fth-activity"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiNeto" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label text="Lo que entro menos lo que salio" styleClass="kpi-detalle"/>
+            </VBox>
+            <VBox styleClass="tarjeta,kpi,kpi-destacado" GridPane.columnIndex="3">
+                <HBox styleClass="kpi-cabecera">
+                    <Label text="Efectivo en caja" styleClass="kpi-titulo" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <StackPane styleClass="kpi-icono"><FontIcon iconLiteral="fth-inbox"/></StackPane>
+                </HBox>
+                <Label fx:id="ycKpiEfectivo" text="S/ 0.00" styleClass="kpi-valor"/>
+                <Label text="Billetes y monedas que debe haber" styleClass="kpi-detalle" wrapText="true"/>
+            </VBox>
+        </GridPane>
+
+        <GridPane hgap="16.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="55.0"/>
+                <ColumnConstraints percentWidth="45.0"/>
+            </columnConstraints>
+            <VBox styleClass="tarjeta" GridPane.columnIndex="0" spacing="10.0">
+                <Label text="Por forma de pago" styleClass="grafico-titulo"/>
+                <GridPane fx:id="ycGridMetodos" hgap="18.0" vgap="8.0"/>
+                <VBox fx:id="ycPanelUsuarios" spacing="6.0"/>
+            </VBox>
+            <VBox styleClass="tarjeta" GridPane.columnIndex="1" spacing="10.0">
+                <Label text="Contar la caja" styleClass="grafico-titulo"/>
+                <Label text="Cuenta los billetes y monedas y escribe el total. Si no cuadra, revisa los movimientos de abajo."
+                       styleClass="campo-ayuda" wrapText="true"/>
+                <VBox styleClass="campo">
+                    <Label text="Efectivo contado (S/)" styleClass="campo-label"/>
+                    <CustomTextField fx:id="ycTxtContado" promptText="Ej. 350.00">
+                        <left><FontIcon iconLiteral="fth-dollar-sign"/></left>
+                    </CustomTextField>
+                </VBox>
+                <Label fx:id="ycLblDiferencia" text=" " styleClass="caja-diferencia" wrapText="true"/>
+                <VBox styleClass="campo">
+                    <Label text="Nota (obligatoria si sobra o falta)" styleClass="campo-label"/>
+                    <TextField fx:id="ycTxtNotaCierre" promptText="Ej. Se dio vuelto de mas a un huesped"/>
+                </VBox>
+                <Button fx:id="ycBtnGuardarCierre" text="Guardar cierre" onAction="#ycOnGuardarCierre" styleClass="accent"
+                        maxWidth="Infinity">
+                    <graphic><FontIcon iconLiteral="fth-lock"/></graphic>
+                </Button>
+                <VBox fx:id="ycListaCierres" spacing="6.0"/>
+            </VBox>
+        </GridPane>
+
+        <VBox fx:id="ycPanelAnulaciones" styleClass="tarjeta" spacing="8.0" visible="false" managed="false">
+            <Label fx:id="ycLblAnulaciones" text="Anulaciones y cancelaciones del día" styleClass="grafico-titulo"/>
+            <VBox fx:id="ycListaAnulaciones" spacing="6.0"/>
+        </VBox>
+
+        <VBox styleClass="tarjeta" minHeight="360.0" prefHeight="460.0">
+            <HBox styleClass="barra-herramientas">
+                <Label fx:id="ycLblLista" text="Movimientos del día" styleClass="grafico-titulo"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Excel" onAction="#ycOnExcel" styleClass="button-outlined">
+                    <graphic><FontIcon iconLiteral="fth-download"/></graphic>
+                    <tooltip><Tooltip text="Descargar la caja del dia en Excel"/></tooltip>
+                </Button>
+            </HBox>
+            <TableView fx:id="ycTabla" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="ycColHora"     text="HORA"     prefWidth="70.0"/>
+                    <TableColumn fx:id="ycColTipo"     text="TIPO"     prefWidth="90.0"/>
+                    <TableColumn fx:id="ycColConcepto" text="CONCEPTO" prefWidth="170.0"/>
+                    <TableColumn fx:id="ycColDetalle"  text="DETALLE"  prefWidth="280.0"/>
+                    <TableColumn fx:id="ycColMetodo"   text="FORMA"    prefWidth="110.0"/>
+                    <TableColumn fx:id="ycColMonto"    text="MONTO"    prefWidth="110.0"/>
+                    <TableColumn fx:id="ycColUsuario"  text="USUARIO"  prefWidth="100.0"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </VBox>
+</ScrollPane>

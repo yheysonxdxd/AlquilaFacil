@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.CustomTextField?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.alquilafacil.controller.YCHabitacionController"
+      styleClass="pagina">
+
+    <fx:define>
+        <ToggleGroup fx:id="ycGrupoEstado"/>
+
+        <VBox fx:id="ycPanelFormulario" styleClass="drawer,drawer-hospedaje"
+              prefWidth="480.0" maxWidth="480.0" maxHeight="Infinity">
+            <HBox styleClass="drawer-header">
+                <StackPane styleClass="drawer-icono"><FontIcon iconLiteral="fth-moon"/></StackPane>
+                <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                    <Label fx:id="ycLblTituloFormulario" text="Nueva habitacion" styleClass="drawer-titulo"/>
+                    <Label fx:id="ycLblSubtituloFormulario" text="Como es la habitacion que ofreces por noche"
+                           styleClass="drawer-subtitulo"/>
+                </VBox>
+                <Button onAction="#ycOnCerrarFormulario" styleClass="flat,button-circle">
+                    <graphic><FontIcon iconLiteral="fth-x"/></graphic>
+                </Button>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" styleClass="drawer-scroll" VBox.vgrow="ALWAYS">
+                <VBox styleClass="drawer-body">
+                    <Label text="FOTO" styleClass="seccion-form"/>
+                    <StackPane fx:id="ycPreviewFoto" styleClass="foto-preview"/>
+                    <HBox spacing="10.0">
+                        <Button text="Elegir foto" onAction="#ycOnElegirFoto" styleClass="button-outlined">
+                            <graphic><FontIcon iconLiteral="fth-upload"/></graphic>
+                        </Button>
+                        <Button fx:id="ycBtnQuitarFoto" text="Quitar foto" onAction="#ycOnQuitarFoto"
+                                styleClass="flat,danger">
+                            <graphic><FontIcon iconLiteral="fth-trash-2"/></graphic>
+                        </Button>
+                    </HBox>
+
+                    <Label text="MAS FOTOS (GALERIA)" styleClass="seccion-form"/>
+                    <FlowPane fx:id="ycPanelGaleria" hgap="8.0" vgap="8.0"/>
+                    <Label text="Hasta 8 fotos extra: baño, vista, detalles. Los huespedes las ven en la ficha."
+                           styleClass="campo-ayuda" wrapText="true"/>
+
+                    <Label text="FOTO 360°" styleClass="seccion-form"/>
+                    <Label fx:id="ycLblFoto360" text="Sin foto 360°" styleClass="estadia-info" wrapText="true"
+                           maxWidth="Infinity"/>
+                    <HBox spacing="10.0">
+                        <Button text="Elegir foto 360°" onAction="#ycOnElegirFoto360" styleClass="button-outlined">
+                            <graphic><FontIcon iconLiteral="fth-compass"/></graphic>
+                        </Button>
+                        <Button fx:id="ycBtnVerFoto360" text="Ver" onAction="#ycOnVerFoto360" styleClass="flat">
+                            <graphic><FontIcon iconLiteral="fth-eye"/></graphic>
+                        </Button>
+                        <Button fx:id="ycBtnQuitarFoto360" text="Quitar" onAction="#ycOnQuitarFoto360" styleClass="flat,danger">
+                            <graphic><FontIcon iconLiteral="fth-trash-2"/></graphic>
+                        </Button>
+                    </HBox>
+                    <Label text="Parate en el centro del cuarto y toma una foto con el modo Panorama del celular (girando completo) o con una app de fotos 360. En la ficha se podra recorrer con el mouse."
+                           styleClass="campo-ayuda" wrapText="true"/>
+
+                    <Label text="LA HABITACION" styleClass="seccion-form"/>
+                    <HBox spacing="12.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Nombre *" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtNumero" promptText="Ej. Habitación 401">
+                                <left><FontIcon iconLiteral="fth-hash"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" prefWidth="80.0">
+                            <Label text="Piso" styleClass="campo-label"/>
+                            <TextField fx:id="ycTxtPiso" promptText="4"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" prefWidth="90.0">
+                            <Label text="Tamaño m²" styleClass="campo-label"/>
+                            <TextField fx:id="ycTxtMetros" promptText="18"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox spacing="12.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Tipo de habitacion *" styleClass="campo-label"/>
+                            <ComboBox fx:id="ycCmbTipo" promptText="Elige el tipo" maxWidth="Infinity"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" prefWidth="110.0">
+                            <Label text="Huespedes *" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtCapacidad" promptText="2">
+                                <left><FontIcon iconLiteral="fth-users"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+                    <Label fx:id="ycLblTipoAyuda" text=" " styleClass="campo-ayuda"/>
+
+                    <HBox spacing="12.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Camas dobles / queen" styleClass="campo-label"/>
+                            <TextField fx:id="ycTxtCamasDobles" promptText="0"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Camas simples / camarotes" styleClass="campo-label"/>
+                            <TextField fx:id="ycTxtCamasSimples" promptText="0"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox styleClass="campo">
+                        <Label text="Descripcion" styleClass="campo-label"/>
+                        <TextArea fx:id="ycTxtDescripcion" prefRowCount="3" wrapText="true"
+                                  promptText="Ej. Amplia, con cortinas blackout y vista a la calle."/>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                    </VBox>
+
+                    <Label text="PRECIO Y HORARIOS" styleClass="seccion-form"/>
+                    <HBox spacing="12.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Precio por noche (S/) *" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtPrecio" promptText="Ej. 80.00">
+                                <left><FontIcon iconLiteral="fth-dollar-sign"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" prefWidth="105.0">
+                            <Label text="Check-in" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtHoraEntrada" promptText="14:00">
+                                <left><FontIcon iconLiteral="fth-log-in"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" prefWidth="105.0">
+                            <Label text="Check-out" styleClass="campo-label"/>
+                            <CustomTextField fx:id="ycTxtHoraSalida" promptText="12:00">
+                                <left><FontIcon iconLiteral="fth-log-out"/></left>
+                            </CustomTextField>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+                    <Label text="El total de cada estadia se calcula: noches × precio por noche."
+                           styleClass="campo-ayuda" wrapText="true"/>
+
+                    <Label text="QUE INCLUYE" styleClass="seccion-form"/>
+                    <FlowPane fx:id="ycPanelComodidades" hgap="8.0" vgap="8.0"/>
+
+                    <Label text="NORMAS DE LA CASA" styleClass="seccion-form"/>
+                    <FlowPane fx:id="ycPanelNormas" hgap="8.0" vgap="8.0"/>
+                </VBox>
+            </ScrollPane>
+
+            <HBox styleClass="drawer-footer">
+                <Button text="Cancelar" onAction="#ycOnCerrarFormulario" styleClass="button-outlined"/>
+                <Button text="Guardar" onAction="#ycOnGuardar" styleClass="accent" defaultButton="true">
+                    <graphic><FontIcon iconLiteral="fth-check"/></graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </fx:define>
+
+    <StackPane fx:id="ycHero" styleClass="cuartos-hero,hero-hospedaje" minHeight="200.0" prefHeight="200.0" maxHeight="200.0">
+        <Region styleClass="hero-fondo"/>
+        <Region styleClass="hero-velo"/>
+        <HBox styleClass="hero-contenido">
+            <VBox spacing="6.0" HBox.hgrow="ALWAYS" alignment="BOTTOM_LEFT">
+                <Label text="HOSPEDAJE SUPPLY" styleClass="hero-kicker"/>
+                <Label text="Habitaciones" styleClass="hero-titulo"/>
+                <Label fx:id="ycLblResumen" text="Tus habitaciones para huespedes" styleClass="hero-subtitulo"/>
+                <HBox spacing="10.0" styleClass="hero-stats">
+                    <Label fx:id="ycLblHeroLibres" text="0 libres hoy" styleClass="hero-stat">
+                        <graphic><FontIcon iconLiteral="fth-check-circle"/></graphic>
+                    </Label>
+                    <Label fx:id="ycLblHeroOcupacion" text="0% ocupacion del mes" styleClass="hero-stat">
+                        <graphic><FontIcon iconLiteral="fth-pie-chart"/></graphic>
+                    </Label>
+                    <Label fx:id="ycLblHeroDesde" text="Desde S/ 0" styleClass="hero-stat">
+                        <graphic><FontIcon iconLiteral="fth-tag"/></graphic>
+                    </Label>
+                </HBox>
+            </VBox>
+            <VBox alignment="BOTTOM_RIGHT" spacing="10.0">
+                <Button text="Ver estadias" onAction="#ycOnVerEstadias" styleClass="button-outlined,hero-boton-sec">
+                    <graphic><FontIcon iconLiteral="fth-calendar"/></graphic>
+                </Button>
+                <Button fx:id="ycBtnNuevo" text="Nueva habitacion" onAction="#ycOnNuevo" styleClass="accent,boton-principal,hero-boton">
+                    <graphic><FontIcon iconLiteral="fth-plus"/></graphic>
+                </Button>
+            </VBox>
+        </HBox>
+    </StackPane>
+
+    <HBox styleClass="barra-herramientas,barra-cuartos">
+        <CustomTextField fx:id="ycTxtBuscar" promptText="Buscar por nombre, tipo o comodidad"
+                         styleClass="buscador" prefWidth="260.0">
+            <left><FontIcon iconLiteral="fth-search"/></left>
+        </CustomTextField>
+        <HBox styleClass="segmentado">
+            <ToggleButton fx:id="ycFiltroTodas" text="Todas" toggleGroup="$ycGrupoEstado" selected="true"
+                          styleClass="left-pill"/>
+            <ToggleButton fx:id="ycFiltroLibres" text="Libres hoy" toggleGroup="$ycGrupoEstado"
+                          styleClass="center-pill"/>
+            <ToggleButton fx:id="ycFiltroOcupadas" text="Ocupadas" toggleGroup="$ycGrupoEstado"
+                          styleClass="right-pill"/>
+        </HBox>
+        <ComboBox fx:id="ycCmbFiltroTipo" prefWidth="170.0" styleClass="filtro-combo"/>
+        <Region HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <ScrollPane fx:id="ycScrollGaleria" fitToWidth="true" styleClass="galeria-scroll" VBox.vgrow="ALWAYS">
+        <FlowPane fx:id="ycGaleria" styleClass="galeria" hgap="20.0" vgap="20.0"/>
+    </ScrollPane>
+</VBox>

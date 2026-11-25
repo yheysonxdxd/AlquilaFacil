@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.ModalPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:id="ycRaiz"
+           fx:controller="com.alquilafacil.controller.YCMainController"
+           styleClass="app"
+           prefWidth="1280.0" prefHeight="800.0">
+
+    <fx:define>
+        <ToggleGroup fx:id="ycMenu"/>
+    </fx:define>
+
+    <BorderPane>
+        <left>
+            <VBox fx:id="ycBarra" styleClass="panel-lateral" prefWidth="240.0" minWidth="240.0">
+                <HBox styleClass="marca" spacing="10.0">
+                    <StackPane styleClass="marca-logo">
+                        <FontIcon iconLiteral="fth-home"/>
+                    </StackPane>
+                    <VBox spacing="1.0">
+                        <Label fx:id="ycLblMarca" text="Hospedaje Supply" styleClass="marca-titulo" wrapText="true"/>
+                        <Label text="Alquileres y hospedaje" styleClass="marca-subtitulo"/>
+                    </VBox>
+                </HBox>
+
+                <ScrollPane fitToWidth="true" styleClass="panel-scroll" VBox.vgrow="ALWAYS" hbarPolicy="NEVER">
+                    <VBox spacing="3.0">
+                        <Label text="GENERAL" styleClass="nav-seccion"/>
+                        <ToggleButton fx:id="ycNavInicio" text="Inicio" toggleGroup="$ycMenu"
+                                      styleClass="nav-item" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-home"/></graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="ycNavCaja" text="Caja del día" toggleGroup="$ycMenu"
+                                      styleClass="nav-item" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-inbox"/></graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="ycNavGastos" text="Gastos y ganancia" toggleGroup="$ycMenu"
+                                      styleClass="nav-item" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-bar-chart-2"/></graphic>
+                        </ToggleButton>
+
+                        <Label text="HOSPEDAJE SUPPLY" styleClass="nav-seccion"/>
+                        <ToggleButton fx:id="ycNavHabitaciones" text="Habitaciones" toggleGroup="$ycMenu"
+                                      styleClass="nav-item,hosp" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-moon"/></graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="ycNavHospedaje" text="Estadias y reservas" toggleGroup="$ycMenu"
+                                      styleClass="nav-item,hosp" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-calendar"/></graphic>
+                        </ToggleButton>
+                        <Label text="ALQUILER MENSUAL" styleClass="nav-seccion"/>
+                        <ToggleButton fx:id="ycNavCuartos" text="Cuartos" toggleGroup="$ycMenu"
+                                      styleClass="nav-item" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-key"/></graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="ycNavInquilinos" text="Inquilinos" toggleGroup="$ycMenu"
+                                      styleClass="nav-item" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-users"/></graphic>
+                        </ToggleButton>
+                        <ToggleButton fx:id="ycNavPagos" text="Pagos y recibos" toggleGroup="$ycMenu"
+                                      styleClass="nav-item" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-dollar-sign"/></graphic>
+                        </ToggleButton>
+
+                    </VBox>
+                </ScrollPane>
+
+                <Separator styleClass="nav-divisor-h"/>
+                <VBox styleClass="usuario-caja" spacing="6.0">
+                    <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <StackPane styleClass="avatar">
+                            <Label fx:id="ycLblIniciales" text="?"/>
+                        </StackPane>
+                        <VBox spacing="1.0" HBox.hgrow="ALWAYS" minWidth="0">
+                            <Label fx:id="ycLblUsuario" text="Sin sesion" styleClass="usuario-nombre"/>
+                            <Label fx:id="ycLblRol" text="" styleClass="usuario-rol"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="6.0" alignment="CENTER_LEFT">
+                        <MenuButton fx:id="ycMenuOpciones" text="Opciones" styleClass="flat,small,usuario-accion"
+                                    HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <graphic><FontIcon iconLiteral="fth-settings"/></graphic>
+                            <tooltip><Tooltip text="Usuarios, copia de seguridad, datos del negocio, diseño..."/></tooltip>
+                        </MenuButton>
+                        <Button fx:id="ycBtnSalir" text="Salir" onAction="#ycOnCerrarSesion" styleClass="flat,small,usuario-accion">
+                            <graphic><FontIcon iconLiteral="fth-log-out"/></graphic>
+                            <tooltip><Tooltip text="Cerrar sesion"/></tooltip>
+                        </Button>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </left>
+
+        <center>
+            <StackPane fx:id="ycContenido" styleClass="contenido"/>
+        </center>
+    </BorderPane>
+
+    <ModalPane fx:id="ycModalPanel"/>
+    <ModalPane fx:id="ycModalDialogo"/>
+    <VBox fx:id="ycZonaNotificaciones" styleClass="zona-notificaciones" spacing="10.0"
+          pickOnBounds="false" alignment="BOTTOM_RIGHT" viewOrder="-100"
+          StackPane.alignment="BOTTOM_RIGHT" maxWidth="-Infinity" maxHeight="-Infinity"/>
+</StackPane>

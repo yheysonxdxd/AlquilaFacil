@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.CustomTextField?>
+<?import com.alquilafacil.ui.YCPaginador?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.alquilafacil.controller.YCInquilinoController"
+      styleClass="pagina">
+
+    <fx:define>
+        <VBox fx:id="ycPanelFormulario" styleClass="drawer"
+              prefWidth="460.0" maxWidth="460.0" maxHeight="Infinity">
+            <HBox styleClass="drawer-header">
+                <StackPane styleClass="drawer-icono"><FontIcon iconLiteral="fth-user"/></StackPane>
+                <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                    <Label fx:id="ycLblTituloFormulario" text="Nuevo inquilino" styleClass="drawer-titulo"/>
+                    <Label fx:id="ycLblSubtituloFormulario" text="Completa los datos para registrarlo"
+                           styleClass="drawer-subtitulo"/>
+                </VBox>
+                <Button onAction="#ycOnCerrarFormulario" styleClass="flat,button-circle">
+                    <graphic><FontIcon iconLiteral="fth-x"/></graphic>
+                </Button>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" styleClass="drawer-scroll" VBox.vgrow="ALWAYS">
+                <VBox styleClass="drawer-body">
+                    <Label text="IDENTIFICACION" styleClass="seccion-form"/>
+
+                    <VBox styleClass="campo">
+                        <Label text="DNI *" styleClass="campo-label"/>
+                        <CustomTextField fx:id="ycTxtDni" promptText="8 digitos">
+                            <left><FontIcon iconLiteral="fth-credit-card"/></left>
+                        </CustomTextField>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                        <Label fx:id="ycLblDniEstado" visible="false" managed="false"/>
+                    </VBox>
+
+                    <HBox spacing="14.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Nombre *" styleClass="campo-label"/>
+                            <TextField fx:id="ycTxtNombre" promptText="Ej. Maria"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Apellidos *" styleClass="campo-label"/>
+                            <TextField fx:id="ycTxtApellido" promptText="Ej. Quispe Mamani"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox styleClass="campo">
+                        <Label text="Celular" styleClass="campo-label"/>
+                        <CustomTextField fx:id="ycTxtTelefono" promptText="9 digitos (para recordatorios por WhatsApp)">
+                            <left><FontIcon iconLiteral="fth-phone"/></left>
+                        </CustomTextField>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                    </VBox>
+
+                    <Label text="ALQUILER" styleClass="seccion-form"/>
+
+                    <VBox styleClass="campo">
+                        <Label text="Cuarto *" styleClass="campo-label"/>
+                        <ComboBox fx:id="ycCmbCuarto" promptText="Selecciona un cuarto libre" maxWidth="Infinity"/>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                    </VBox>
+
+                    <VBox styleClass="campo">
+                        <Label text="Renta mensual pactada (S/) *" styleClass="campo-label"/>
+                        <CustomTextField fx:id="ycTxtRenta" promptText="Se propone el precio del cuarto">
+                            <left><FontIcon iconLiteral="fth-dollar-sign"/></left>
+                        </CustomTextField>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                        <Label text="Queda fija para este inquilino aunque despues cambies el precio del cuarto. El mes en que entra y el mes en que se va se cobran solo por los dias que vive."
+                               styleClass="campo-ayuda" wrapText="true"/>
+                    </VBox>
+
+                    <HBox spacing="14.0">
+                        <VBox styleClass="campo" HBox.hgrow="ALWAYS">
+                            <Label text="Fecha de ingreso *" styleClass="campo-label"/>
+                            <DatePicker fx:id="ycDpIngreso" maxWidth="Infinity"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                        <VBox styleClass="campo" prefWidth="130.0">
+                            <Label text="Dia de pago *" styleClass="campo-label"/>
+                            <TextField fx:id="ycTxtDiaPago" promptText="1 a 31"/>
+                            <Label styleClass="campo-error" visible="false" managed="false"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox styleClass="campo">
+                        <Label text="Fin del contrato" styleClass="campo-label"/>
+                        <DatePicker fx:id="ycDpFinContrato" maxWidth="Infinity"/>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                        <Label text="Opcional. Te avisa en Inicio 30 dias antes. Dejalo vacio si no tiene fecha de fin."
+                               styleClass="campo-ayuda" wrapText="true"/>
+                    </VBox>
+
+                    <VBox styleClass="campo">
+                        <Label text="Garantia recibida (S/)" styleClass="campo-label"/>
+                        <CustomTextField fx:id="ycTxtGarantia" promptText="0.00">
+                            <left><FontIcon iconLiteral="fth-shield"/></left>
+                        </CustomTextField>
+                        <Label styleClass="campo-error" visible="false" managed="false"/>
+                        <Label text="Se devuelve o se descuenta cuando el inquilino se va."
+                               styleClass="campo-ayuda" wrapText="true"/>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+
+            <HBox styleClass="drawer-footer">
+                <Button text="Cancelar" onAction="#ycOnCerrarFormulario" styleClass="button-outlined"/>
+                <Button text="Guardar" onAction="#ycOnGuardar" styleClass="accent" defaultButton="true">
+                    <graphic><FontIcon iconLiteral="fth-check"/></graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </fx:define>
+
+    <HBox styleClass="pagina-cabecera">
+        <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+            <Label text="Inquilinos" styleClass="pagina-titulo"/>
+            <Label text="Personas que alquilan, su cuarto y su dia de pago" styleClass="pagina-subtitulo"/>
+        </VBox>
+        <Button text="Nuevo inquilino" onAction="#ycOnNuevo" styleClass="accent,boton-principal">
+            <graphic><FontIcon iconLiteral="fth-user-plus"/></graphic>
+        </Button>
+    </HBox>
+
+    <VBox styleClass="tarjeta" VBox.vgrow="ALWAYS">
+        <HBox styleClass="barra-herramientas">
+            <CustomTextField fx:id="ycTxtBuscar" promptText="Buscar por nombre, DNI o cuarto"
+                             styleClass="buscador" prefWidth="320.0">
+                <left><FontIcon iconLiteral="fth-search"/></left>
+            </CustomTextField>
+            <CheckBox fx:id="ycChkRetirados" text="Mostrar retirados"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Excel" onAction="#ycOnExcel" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-download"/></graphic>
+                <tooltip><Tooltip text="Descargar esta lista en Excel"/></tooltip>
+            </Button>
+            <Button fx:id="ycBtnEditar" text="Editar" onAction="#ycOnEditar" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-edit-2"/></graphic>
+            </Button>
+            <Button fx:id="ycBtnContrato" text="Contrato PDF" onAction="#ycOnContrato" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-file-text"/></graphic>
+            </Button>
+            <Button fx:id="ycBtnBaja" text="Registrar salida" onAction="#ycOnDarDeBaja" styleClass="button-outlined">
+                <graphic><FontIcon iconLiteral="fth-user-x"/></graphic>
+            </Button>
+            <Button fx:id="ycBtnEliminar" text="Eliminar" onAction="#ycOnEliminar"
+                    styleClass="button-outlined,danger">
+                <graphic><FontIcon iconLiteral="fth-trash-2"/></graphic>
+            </Button>
+        </HBox>
+
+        <TableView fx:id="ycTabla" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="ycColNombre"   text="INQUILINO"    prefWidth="240.0"/>
+                <TableColumn fx:id="ycColDni"      text="DNI"          prefWidth="100.0"/>
+                <TableColumn fx:id="ycColTelefono" text="CELULAR"      prefWidth="110.0"/>
+                <TableColumn fx:id="ycColCuarto"   text="CUARTO"       prefWidth="120.0"/>
+                <TableColumn fx:id="ycColIngreso"  text="INGRESO"      prefWidth="100.0"/>
+                <TableColumn fx:id="ycColRenta"    text="RENTA"        prefWidth="95.0"/>
+                <TableColumn fx:id="ycColDiaPago"  text="PAGA EL DIA"  prefWidth="95.0"/>
+                <TableColumn fx:id="ycColContrato" text="CONTRATO"     prefWidth="130.0"/>
+                <TableColumn fx:id="ycColEstado"   text="ESTADO"       prefWidth="110.0"/>
+            </columns>
+        </TableView>
+
+        <YCPaginador fx:id="ycPaginador"/>
+    </VBox>
+</VBox>
